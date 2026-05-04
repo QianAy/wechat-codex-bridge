@@ -1,0 +1,24 @@
+{
+  "commands": {
+    "time": {
+      "command": "Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'",
+      "workingDirectory": "C:\\Users\\QianAy\\Documents\\Codex\\2026-05-01\\codex-deepseek-v4",
+      "timeoutSeconds": 10
+    },
+    "ls": {
+      "command": "Get-ChildItem -Force | Select-Object -First 20 Name,Length,LastWriteTime | Format-Table -AutoSize | Out-String",
+      "workingDirectory": "C:\\Users\\QianAy\\Documents\\Codex\\2026-05-01\\codex-deepseek-v4",
+      "timeoutSeconds": 10
+    },
+    "时间": {
+      "command": "Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'",
+      "workingDirectory": "C:\\Users\\QianAy\\Documents\\Codex\\2026-05-01\\codex-deepseek-v4",
+      "timeoutSeconds": 10
+    },
+    "目录": {
+      "command": "Get-ChildItem -Force | Select-Object -First 20 Name,Length,LastWriteTime | Format-Table -AutoSize | Out-String",
+      "workingDirectory": "C:\\Users\\QianAy\\Documents\\Codex\\2026-05-01\\codex-deepseek-v4",
+      "timeoutSeconds": 10
+    }
+  }
+}

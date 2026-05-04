@@ -1,0 +1,8 @@
+{
+  "name": "wechat-codex-bridge",
+  "version": "1.0.0",
+  "main": "cloud-wechat-queue.js",
+  "scripts": {
+    "start": "node cloud-wechat-queue.js"
+  }
+}

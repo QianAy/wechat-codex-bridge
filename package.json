@@ -1,8 +1,12 @@
 {
   "name": "wechat-codex-bridge",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "description": "微信测试公众号 → Claude Code AI 桥接系统。通过微信发送指令，由本地PC上的Claude AI执行代码修改、问答、审查等任务。",
   "main": "cloud-wechat-queue.js",
   "scripts": {
-    "start": "node cloud-wechat-queue.js"
-  }
+    "start": "node cloud-wechat-queue.js",
+    "agent": "powershell -ExecutionPolicy Bypass -File local-agent.ps1"
+  },
+  "keywords": ["wechat", "claude", "ai", "codex", "bridge"],
+  "license": "MIT"
 }

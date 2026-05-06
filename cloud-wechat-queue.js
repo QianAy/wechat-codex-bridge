@@ -283,8 +283,13 @@ const server = http.createServer(async (req, res) => {
       // ---- 结果 / result ----
       if (/^(result|结果)$/i.test(content)) {
         if (results.length === 0) {
+          // 没有结果时，检查是否有待处理任务，给出更具体的提示
+          if (tasks.length > 0) {
+            res.writeHead(200, { "content-type": "application/xml; charset=utf-8" });
+            return res.end(wechatReply(from, to, `AI 仍在思考中...当前有 ${tasks.length} 个任务等待处理，请稍后再发送"结果"查看。`));
+          }
           res.writeHead(200, { "content-type": "application/xml; charset=utf-8" });
-          return res.end(wechatReply(from, to, "暂未执行任何任务。发送 help 查看可用命令。"));
+          return res.end(wechatReply(from, to, "暂无任务记录。直接发送问题即可开始对话。"));
         }
         // 只返回最新一条结果，不带历史
         const latest = results[results.length - 1];
@@ -312,9 +317,21 @@ const server = http.createServer(async (req, res) => {
         return res.end(wechatReply(from, to, quickResult.slice(0, 1800)));
       }
 
-      // AI任务等耗时操作，告知用户稍后查询
+      // AI任务等耗时操作，根据类型给出预计等待时间
+      const isQuickCmd = /^(time|时间|ls|目录|status|状态|log|日志|whoami|用户|ip|help|帮助|result|结果|git\b)/i.test(content);
+      const isDevCmd = /^(dev |需求 |review |审查 |git commit |git提交 )/i.test(content);
+      let waitHint;
+      if (isDevCmd) {
+        waitHint = "预计需要 1-5 分钟。完成后发送\"结果\"查看。";
+      } else if (!isQuickCmd) {
+        // 自然语言问题 → AI 问答
+        waitHint = "AI 思考中，预计 30-120 秒。请稍后发送\"结果\"查看。";
+      } else {
+        waitHint = "正在处理，请稍后发送\"结果\"查看。";
+      }
+
       res.writeHead(200, { "content-type": "application/xml; charset=utf-8" });
-      return res.end(wechatReply(from, to, `已入队 #${task.id}，处理中...稍后发送"结果"查看。`));
+      return res.end(wechatReply(from, to, `已入队 #${task.id}\n${waitHint}`));
     }
 
     // ---- 代理轮询取任务 ----

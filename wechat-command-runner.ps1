@@ -91,6 +91,8 @@ function Invoke-CapturedPowerShell {
   $psi.WorkingDirectory = $WorkingDirectory
   $psi.RedirectStandardOutput = $true
   $psi.RedirectStandardError = $true
+  $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+  $psi.StandardErrorEncoding = [System.Text.Encoding]::UTF8
   $psi.UseShellExecute = $false
   $psi.CreateNoWindow = $true
 
@@ -195,6 +197,8 @@ function Invoke-ClaudeCLI {
     $psi.RedirectStandardInput = $true
     $psi.RedirectStandardOutput = $true
     $psi.RedirectStandardError = $true
+    $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+    $psi.StandardErrorEncoding = [System.Text.Encoding]::UTF8
     $psi.UseShellExecute = $false
     $psi.CreateNoWindow = $true
 
